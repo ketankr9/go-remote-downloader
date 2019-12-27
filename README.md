@@ -7,20 +7,27 @@ The client chooses the no of parts in which the file is to be downloaded.  Then 
 
 **Server code**  
 The server has a fixed no of download routines which can run in parallel, default to 16 here.  
-The server accepts the dowload request from the client which comparises mainly of *url* and *byte-range* of the chunk and saves it in ```/tmp/```. Which can further be combined using cat. Refer ```verify.sh``` for more 
+The server accepts the dowload request from the client which comparises mainly of *url* and *byte-range* of the chunk and saves it in ```/tmp/```. Which can further be combined using cat. Refer ```verify.sh``` for more
 
-**On server side**
+**On server 1**
 ```
 $ git clone https://github.com/ketankr9/go-remote-downloader.git
 $ cd go-remote-downloader
-$ go run server/main.go
+$ go run server.go 6969
+```
+
+**On server 2**
+```
+$ git clone https://github.com/ketankr9/go-remote-downloader.git
+$ cd go-remote-downloader
+$ go run server.go 6970
 ```
 
 **On Client Side**  
 ```
 $ git clone https://github.com/ketankr9/go-remote-downloader.git
 $ cd go-remote-downloader
-$ go run client/main.go
+$ go run client.go
 ```
 
 **Verify reconstruction on server side**  
@@ -29,8 +36,9 @@ $ wget -o /tmp/100MB.bin https://speed.hetzner.de/100MB.bin
 $ cd go-remote-downloader
 $ chmod +x verify.sh
 $ ./verify.sh
+2f282b84e7e608d5852449ed940bfc51  100MB.bin
 ```
 
 **Further Goals**  
 *   Modify client code such that it distributes the file to be downloaded in chunks over multiple servers/clusters.
-*   Handle various errors. Like http requests 
+*   Handle various errors. Like http requests
